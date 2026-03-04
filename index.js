@@ -3,11 +3,20 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const authRouter = require("./auth");
 
-app.use(cors());
+const authRouter = require("./auth");
+const profileRouter = require("./profile");
+
+app.use(
+  cors({
+    origin: "http://localhost:8080",
+    credentials: true,
+  }),
+);
 app.use(express.json());
+
 app.use("/api/auth", authRouter);
+app.use("/api/profile", profileRouter);
 
 app.get("/health", (req, res) => {
   res.json({ message: "API is running" });
